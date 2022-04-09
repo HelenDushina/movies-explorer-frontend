@@ -1,0 +1,38 @@
+
+.authform__field_theme_profile {
+    text-align: right;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 16px 0 16px;
+    width: 410px;
+
+}
+
+.authform__title_profile {
+    margin: 74px 0 109px;
+}
+
+.authform__field_theme_mailprofile {
+    border-bottom: none;
+}
+
+.authform__groupinput {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+}
+
+.authform__infoinput_profile {
+    position: absolute;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #FFFFFF;
+}
+
+.authform__label_type_profile {
+    padding: 0 0 190px;
+}
