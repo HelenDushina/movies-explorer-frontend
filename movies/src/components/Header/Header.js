@@ -30,7 +30,7 @@ function Header (props) {
                     <img src={landingLogo} alt="Логотип" className="header__coverlogo"/>
                   </div>
                 </Route>
-                <Route exact path={["/movies","/profile"]}>
+                <Route exact path={["/movies","/saved-movies","/profile"]}>
                   <div className="header__groupnav">
                     <Link className="header__link" to='/'><img src={headerLogo} alt="Логотип" className="header__logo"/></Link>
                     <div className="header__group header__group_movies">
@@ -45,7 +45,7 @@ function Header (props) {
                       Аккаунт
                         <img src={iconProfile} alt="profileicon" className="header__iconprofile"/>
                     </Link>
-                    <button className="header__buttonmenu"><img className="header__buttonicon" src={iconMenu} alt="Открыть меню"/></button>
+                    <button type="button" className="header__buttonmenu" onClick={props.onOpenMenu}><img className="header__buttonicon" src={iconMenu} alt="Открыть меню"/></button>
                     <div className="header__menu"></div>
                   </div>
                 </Route>

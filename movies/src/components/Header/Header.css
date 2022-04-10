@@ -31,6 +31,11 @@
     color: #FFFFFF
 }
 
+.header__link:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
 .header__link_type_movies {
     padding: 20px 0 20px;
     font-style: normal;
@@ -125,6 +130,7 @@
 
 .header__buttonmenu {
     display: none;
+    padding: 0;
 }
 
 .header__menu{
@@ -135,6 +141,11 @@
     align-self: center;
     width: 396px;
     padding: 50px 0 20px;
+}
+
+.header__buttonicon {
+    width: 44px;
+    height: 44px;
 }
 
 
@@ -160,6 +171,11 @@
     .header__link_type_profile{
         display: none;
     }
+
+    .header__link_auth {
+        padding: 212px 0 20px;
+    }
+
     .header__buttonmenu{
         display: block;
         background-color: #202020;
@@ -205,6 +221,13 @@
         height: 26px;
         font-style: normal;
         font-size: 10px;
+    }
+
+    .header__link_auth {
+        width: 260px;
+        padding: 40px 0 26px;
+        display: flex;
+        justify-content: center;
     }
 
 }

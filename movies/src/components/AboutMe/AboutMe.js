@@ -1,6 +1,6 @@
 import './AboutMe.css';
 import '../Main/Main.css';
-import avatarpic from '../../images/DSC_0012.jpg';
+import avatarpic from '../../images/DSC_0012-min.jpg';
 
 
 function AboutMe (props) {

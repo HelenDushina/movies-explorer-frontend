@@ -53,12 +53,22 @@
     padding: 0;
 }
 
+.movie__button:hover {
+    opacity: 0.8;
+}
+
 .movie__button_saved {
     background-color: #EE3465;
+    background-image: url(../../images/icon__saved.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .movie__button_removesaved {
     background-color: #313131;
+    background-image: url(../../images/icon__removesaved.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 @media screen and (max-width: 768px) {

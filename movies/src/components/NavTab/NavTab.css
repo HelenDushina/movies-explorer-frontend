@@ -24,6 +24,11 @@
     color: #FFFFFF;
 }
 
+.navtab__link:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
 .navtab__li:not(:last-child) {
     padding: 0 40px 0 0;
 }

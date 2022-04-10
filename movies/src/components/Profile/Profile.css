@@ -6,12 +6,9 @@
     line-height: 13px;
     padding: 16px 0 16px;
     width: 410px;
-
 }
 
-.authform__title_profile {
-    margin: 74px 0 109px;
-}
+
 
 .authform__field_theme_mailprofile {
     border-bottom: none;
@@ -35,4 +32,23 @@
 
 .authform__label_type_profile {
     padding: 0 0 190px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .authform__label_type_profile {
+        padding: 0 0 180px;
+    }
+
+}
+
+
+@media screen and (max-width: 450px) {
+
+    .authform__field_theme_profile {
+        width: 260px;
+    }
+    .authform__label_type_profile {
+        padding: 0 0 350px;
+    }
 }

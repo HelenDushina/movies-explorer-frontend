@@ -4,11 +4,12 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import {
   initialMovies
 } from '../../utils/constants';
+import {Route, Switch} from "react-router-dom";
 
 
-function MoviesCardList (props) {
+function MoviesCardList (savedMovies = false) {
   return (
-    <section className="moviesCardList">
+    <section className={`moviesCardList ${savedMovies && "moviesCardList_saved"}`}>
       <div className="moviesCardList__movies">
         { initialMovies.map(item =>
           (<MoviesCard
@@ -18,9 +19,13 @@ function MoviesCardList (props) {
         />)
         )}
       </div>
-      <div className="moviesCardList__buttongroup">
-        <button className="moviesCardList__button">Ещё</button>
-      </div>
+      <Switch>
+        <Route exact path='/movies'>
+          <div className="moviesCardList__buttongroup">
+            <button className="moviesCardList__button">Ещё</button>
+          </div>
+        </Route>
+      </Switch>
     </section>
   );
 }

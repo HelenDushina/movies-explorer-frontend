@@ -13,18 +13,6 @@ function Profile (props) {
     resetForm();
   }, [resetForm]);
 
-  // const [mail, setMail] = React.useState ('');
-  // const [name, setName] = React.useState ('');
-  //
-  //
-  // function handleChangeMail (e) {
-  //   setMail (e.target.value);
-  // }
-  // function handleChangeName (e) {
-  //   setName (e.target.value);
-  // }
-
-
   function handleSubmit (e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault ();

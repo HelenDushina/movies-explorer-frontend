@@ -8,8 +8,22 @@ import React from "react";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Navigation from "../Navigation/Navigation";
 
 function App() {
+
+  const [isMenuOpen, setMenuOpen] = React.useState (false);
+
+  function closePopup () {
+    setMenuOpen (false);
+  }
+
+  function handleOpenMenuClick () {
+    setMenuOpen (true);
+  }
+
+
   return (
     <div className="App">
       <div className="page">
@@ -18,7 +32,10 @@ function App() {
             <Main />
           </Route>
           <Route exact path="/movies">
-            <Movies />
+            <Movies onOpenMenu={handleOpenMenuClick} />
+          </Route>
+          <Route exact path="/saved-movies">
+            <SavedMovies onOpenMenu={handleOpenMenuClick}/>
           </Route>
           <Route exact path="/signup">
             <Register />
@@ -34,6 +51,7 @@ function App() {
           </Route>
         </Switch>
         <Footer />
+        < Navigation isOpen = {isMenuOpen} onClose={closePopup}/>
       </div>
     </div>
   );
