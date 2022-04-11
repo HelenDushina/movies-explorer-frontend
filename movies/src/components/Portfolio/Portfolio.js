@@ -32,7 +32,7 @@ function Portfolio (props) {
           <div className="portfolio__linkgroup portfolio__linkgroup_noborder">
           <a
             className="portfolio__link portfolio__link_nopadding"
-            href="https://github.com/HelenDushina/react-mesto-api-full"
+            href="http://mestohelen.students.nomoredomains.work/"
             target="_blank"
           >Одностраничное приложение</a>
           <img src={linkimage} alt="Логотип" className="portfolio__linkimage portfolio__linkimage_nopadding"/>

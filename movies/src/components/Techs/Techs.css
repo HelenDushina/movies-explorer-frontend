@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     background-color: #272727;
-    background-color: #272727;
     padding: 0 70px 0;
 }
 
@@ -92,11 +91,13 @@
 
 @media screen and (max-width: 480px) {
     .tech {
+        background-color: #202020;
         padding: 0 18px 0;
     }
 
     .title_place_tech {
         padding: 70px 0 28px;
+        border-bottom: 1px solid rgba(0, 0, 0, 1);
     }
 
     .name_place_tech{

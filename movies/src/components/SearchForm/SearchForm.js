@@ -19,18 +19,15 @@ function SearchForm (props) {
       <div className="searchform__group">
         <form className="searchform__form">
           <div className="searchform_searchgroup">
-          <input type="text" placeholder="Фильм" className="searchform__input"/>
+          <input type="text" placeholder="Фильм" className="searchform__input" required/>
             <button className="searchform__button" type="submit">
               <img src={searchIcon} alt="Картинка поиска" className="searchform__icon"/>
             </button>
           </div>
-          {/*<div className="searchform_checkboxgroup">*/}
             <label className="searchform__label"> Короткометражки
               <input type="checkbox" value={valueDuration} onChange={handleChangeDuration} className="searchform__filterCheckbox"/>
               <span className="searchform__filterCheckbox_visible-checkbox"><div className="searchform_checkboxcicle"></div></span>
             </label>
-
-          {/*</div>*/}
         </form>
       </div>
     </section>
