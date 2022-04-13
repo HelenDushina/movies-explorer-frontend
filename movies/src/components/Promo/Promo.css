@@ -1,0 +1,173 @@
+.promo {
+    display: flex;
+    flex-direction: column;
+    padding: 0 70px 0;
+}
+
+.promo__grouprow {
+    display: flex;
+}
+
+.promo__group {
+    display: flex;
+    padding: 70px 40px 0 0px;
+    flex-direction: column;
+}
+
+.promo__group_last {
+    padding: 70px 0 0 0;
+}
+
+
+.promo__subtitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    flex-grow: 1;
+    padding: 0 0 26px;
+}
+
+.promo__text {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.promo__duration {
+    padding: 110px 0 0;
+    display: flex;
+    width: 100%;
+}
+
+.promo__text_duration_week {
+    flex-grow: 0.2;
+    text-align: center;
+    background-color: rgba(61, 220, 132, 1);
+    color: #000000;
+    min-height: 36px;
+    line-height	: 36px;
+}
+
+.promo__text_duration_mounth {
+    flex-grow: 0.8;
+    text-align: center;
+    min-height: 36px;
+    line-height	: 36px;
+    background-color:  #303030;
+}
+
+.promo__groupduration {
+    display: flex;
+}
+
+.promo__text_parts_back {
+    flex-grow: 0.2;
+    text-align: center;
+    padding: 9px 0 110px;
+}
+
+.promo__text_parts_front {
+    flex-grow: 0.8;
+    text-align: center;
+    padding: 9px 0 110px;
+}
+
+@media screen and (max-width: 768px) {
+    .promo {
+        padding: 0 50px 0;
+    }
+    .promo__subtitle {
+        padding: 0 0 22px;
+    }
+    .promo__text {
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .promo__duration {
+        padding: 93px 0 0;
+    }
+    .promo__text_duration_week {
+        font-size: 14px;
+        line-height: 36px;
+        }
+    .promo__text_duration_mounth {
+        font-size: 14px;
+        line-height: 36px;
+     }
+    .promo__text_parts_back {
+        font-size: 14px;
+        padding: 14px 0 90px;
+    }
+
+    .promo__text_parts_front {
+        font-size: 14px;
+        padding: 14px 0 90px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .promo {
+        padding: 0 18px 0;
+    }
+
+    .promo__subtitle {
+        font-size: 18px;
+        line-height: 22px;
+        padding: 0 0 16px;
+    }
+
+    .promo__grouprow {
+        flex-direction: column;
+    }
+
+    .promo__group {
+        flex-direction: column;
+        padding: 60px 0 0px;
+    }
+
+    .promo__group_last {
+        padding: 56px 0 0;
+    }
+
+    .promo__text {
+        line-height: 16px;
+    }
+
+    .promo__duration {
+        padding: 60px 0 0;
+    }
+
+    .promo__groupduration {
+       padding: 0 0 70px;
+    }
+    .promo__text_duration_week {
+        padding: 0;
+        font-size: 11px;
+        line-height: 36px;
+    }
+
+    .promo__text_duration_mounth {
+        padding: 0;
+        font-size: 11px;
+        line-height: 36px;
+    }
+
+    .promo__text_parts_back {
+        font-size: 11px;
+        padding: 10px 0 0;
+        line-height: 13px;
+    }
+
+    .promo__text_parts_front {
+        font-size: 11px;
+        padding: 10px 0 0;
+        line-height: 13px;
+    }
+}

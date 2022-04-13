@@ -1,0 +1,10 @@
+
+.authform__label_type_login {
+    padding: 0 0 218px;
+}
+
+@media screen and (max-width: 450px) {
+    .authform__label_type_login {
+        padding: 0 0 310px;
+    }
+}

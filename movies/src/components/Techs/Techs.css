@@ -1,0 +1,122 @@
+.tech {
+    display: flex;
+    flex-direction: column;
+    background-color: #272727;
+    padding: 0 70px 0;
+}
+
+.title_place_tech {
+    padding: 100px 0 23px;
+}
+
+.name_place_tech {
+    margin: 0;
+    padding: 90px 0 26px;
+}
+
+.tech__about {
+    align-self: center;
+    margin: 0;
+    padding: 0 0 100px;
+    text-align: center;
+    max-width: 460px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.04em;
+}
+
+.tech__list {
+    padding: 0 0 100px;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    align-self: center;
+}
+
+.tech__listitem {
+    width: 90px;
+    height: 60px;
+    background-color: #303030;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 10px;
+    font-size: 14px;
+
+}
+
+.tech__listitem:not(:last-child) {
+    margin: 0 10px 0 0;
+}
+
+@media screen and (max-width: 768px) {
+    .tech {
+        padding: 0 50px 0;
+    }
+    .tech__listitem {
+        width: 84px;
+        height: 57px;
+        line-height: 57px;
+        font-size: 12px;
+    }
+    .title_place_tech {
+        padding: 90px 0 23px;
+    }
+    .name_place_tech {
+        margin: 0;
+        padding: 80px 0 22px;
+    }
+    .tech__about {
+        font-size: 12px;
+        line-height: 18px;
+        padding: 0 0 83px;
+    }
+    .tech__list {
+        padding: 0 0 90px;
+     }
+
+}
+
+@media screen and (max-width: 680px) {
+
+    .tech__list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .tech {
+        background-color: #202020;
+        padding: 0 18px 0;
+    }
+
+    .title_place_tech {
+        padding: 70px 0 28px;
+        border-bottom: 1px solid rgba(0, 0, 0, 1);
+    }
+
+    .name_place_tech{
+        font-size: 30px;
+        line-height: 36px;
+        padding: 60px 0 24px;
+    }
+
+    .tech__about {
+        padding: 0 0 50px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .tech__list {
+        padding: 0 0 70px;
+    }
+    .tech__listitem:not(:last-child) {
+        margin: 0;
+    }
+
+}
