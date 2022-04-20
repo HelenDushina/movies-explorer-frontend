@@ -135,24 +135,32 @@ function App(props) {
 
   //FILMS
 
-  function filterMovies(moviesList, searchQuery,shortQuery) {
+  function filterMovies(moviesList, searchQuery) {
 
     const filteredMovies = moviesList.filter((mov) => {
       return mov.nameRU.toLowerCase().includes(searchQuery.toLowerCase())
     });
+
+    return filteredMovies;
+
+  }
+
+  function filterMoviesShort(moviesList, shortQuery) {
+
     if (shortQuery) {
-      const filteredShortMovies = filteredMovies.filter((mov) => {
+      const filteredShortMovies = moviesList.filter((mov) => {
         return mov.duration <= 40
       });
       return filteredShortMovies;
     }
     else {
-      return filteredMovies;
+      return moviesList;
     }
   }
 
   const [searchQuery, setSearchQuery] = useState("");
   const [shortQuery, setShortQuery] = useState(false);
+
 
   const handler = useCallback(() => {
     return MoviesApi.getInitialMovies ();
@@ -202,6 +210,10 @@ function App(props) {
     setShortQuery(data.duration);
     localStorage.setItem("searchQuery",searchQuery);
     localStorage.setItem("shortQuery",shortQuery);
+  }
+
+  function handleChangeDuration() {
+    setShortQuery(!shortQuery);
   }
 
   const [savedMovies, setSavedMovies] = React.useState ([]);
@@ -267,6 +279,9 @@ function App(props) {
     setSavedMovies(filteredMovies);
   }
 
+  function handleChangeDurationSaved() {
+    setshortQuerySaved(!shortQuerySaved);
+  }
 
   function handleSignOut () {
     setLoggedIn (false);
@@ -292,12 +307,13 @@ function App(props) {
                           loggedIn={loggedIn}
                           component={Movies}
                           onSearch = {handleSearch}
+                          handleChangeDuration = {handleChangeDuration}
                           initialValueSearch = {searchQuery}
                           initialValueShort = {shortQuery}
                           isLoading={loading}
                           error = {error}
                           onMovieSave = {handleMovieSave}
-                          movies = {{data: movies}}
+                          movies = {shortQuery? {data: filterMoviesShort(movies, shortQuery)}: {data: movies}}
                           savedMoviesList = {savedMovies}
           />
           <ProtectedRoute  exact path="/saved-movies"
@@ -305,8 +321,9 @@ function App(props) {
                            loggedIn={loggedIn}
                            component={SavedMovies}
                            onMovieSave = {handleMovieSave}
-                           movies = {{data: savedMovies}}
+                           movies = {shortQuerySaved? {data: filterMoviesShort(savedMovies, shortQuerySaved)}: {data: savedMovies}}
                            onSearch = {handleSavedSearch}
+                           handleChangeDuration = {handleChangeDurationSaved}
                            initialValueSearch = {searchQuerySaved}
                            initialValueShort = {shortQuerySaved}
           />

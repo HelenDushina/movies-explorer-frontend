@@ -10,14 +10,6 @@ function SearchForm (props) {
   const [valueShort, setValueShort] = React.useState(props.initialValueShort);
   const [valueFilm, setvalueFilm] = React.useState(props.initialValueSearch);
 
-  const сheckboxButtonClassName = (
-    `searchform__filterCheckbox_visible-checkbox ${valueShort ? 'searchform__filterCheckbox_visible-checkbox_active' : 'searchform__filterCheckbox_visible-checkbox_disable'}`
-  );
-
-  // Обработчик изменения инпута обновляет стейт
-  function handleChangeDuration(e) {
-    setValueShort(!valueShort);
-  }
 
   function handleChangeFilm(e) {
     setvalueFilm(e.target.value);
@@ -45,8 +37,8 @@ function SearchForm (props) {
             </button>
           </div>
             <label className="searchform__label"> Короткометражки
-              <input type="checkbox" value={valueShort}  onChange={handleChangeDuration} className="searchform__filterCheckbox"/>
-              <span className={сheckboxButtonClassName}><div className="searchform_checkboxcicle"></div></span>
+              <input type="checkbox" value={valueShort}  onChange={props.handleChangeDuration} className="searchform__filterCheckbox"/>
+              <span className="searchform__filterCheckbox_visible-checkbox"><div className="searchform_checkboxcicle"></div></span>
             </label>
         </form>
       </div>

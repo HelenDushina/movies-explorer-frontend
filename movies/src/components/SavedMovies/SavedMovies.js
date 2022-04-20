@@ -10,7 +10,8 @@ function SavedMovies (props) {
       <Header main = {false} onOpenMenu = {props.onOpenMenu}/>
       <SearchForm onSearch = {props.onSearch}
                   initialValueSearch = {props.initialValueSearch}
-                  initialValueShort = {props.initialValueShort}/>
+                  initialValueShort = {props.initialValueShort}
+                  handleChangeDuration = {props.handleChangeDuration}/>
       <MoviesCardList movies = {props.movies}
                       savedMovies = {true}
                       onMovieSave={props.onMovieSave}/>

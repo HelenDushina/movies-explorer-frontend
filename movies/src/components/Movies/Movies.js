@@ -12,7 +12,8 @@ function Movies (props) {
       <Header main = {false} onOpenMenu = {props.onOpenMenu}/>
       <SearchForm onSearch = {props.onSearch}
                   initialValueSearch ={props.initialValueSearch}
-                  initialValueShort = {props.initialValueShort}/>
+                  initialValueShort = {props.initialValueShort}
+                  handleChangeDuration = {props.handleChangeDuration}/>
       {props.isLoading ? (
         <Preloader />
       ) :
