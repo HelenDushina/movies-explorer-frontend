@@ -5,10 +5,12 @@ import './MoviesCard.css'
 
 function MoviesCard (props) {
 
-  const [isLiked, setisLiked] = React.useState (false);
+  // const [isLiked, setisLiked] = React.useState (false);
+  const isLiked = props.savedMoviesList.some (i => i.movieId === props.movie.movieId);
 
   function handleLikeClick () {
-    setisLiked(!isLiked);
+    // setisLiked(!isLiked);
+    props.onMovieSave(props.movie);
   }
 
   return (
@@ -17,7 +19,13 @@ function MoviesCard (props) {
         <p className="movie__title">{props.name}</p>
         <p className="movie__subtitle">{props.duration}</p>
       </div>
-      <img className="movie__image" src={props.link} alt={props.name} />
+      <a
+        className="aboutme__link"
+        href={props.movie.trailerLink}
+        target="_blank"
+      >
+        <img className="movie__image" src={props.link} alt={props.name} />
+      </a>
       <div className="movie__group movie__group_button">
         <Switch>
           <Route exact path='/movies'>

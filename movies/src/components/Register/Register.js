@@ -3,6 +3,7 @@ import AuthForm from "../AuthForm/AuthForm";
 import "../AuthForm/AuthForm.css"
 import Header from "../Header/Header";
 import {useFormWithValidation} from "../../hooks/useForm";
+import {withRouter} from "react-router-dom";
 
 function Register (props) {
 
@@ -27,7 +28,8 @@ function Register (props) {
   return (
     <>
       <Header/>
-      <AuthForm title='Добро пожаловать!' buttonText='Зарегистрироваться' onSubmit={handleSubmit} isDisabled = {!isValid}>
+      <AuthForm title='Добро пожаловать!' buttonText='Зарегистрироваться' onSubmit={handleSubmit}
+                isDisabled = {!isValid} ToolTipStatus = {props.ToolTipStatus} warningMessage = {props.warningMessage}>
         <label className="authform__label">
           <span className="authform__infoinput">Имя</span>
           <input
@@ -39,7 +41,8 @@ function Register (props) {
             minLength="2"
             maxLength="40"
             id="name"
-            value={values.name} onChange={handleChange}
+            autoComplete="off"
+            value={values.name || ''} onChange={handleChange}
           />
           <span id="name-error" className="error">{errors.name || ""}</span>
           <span className="authform__infoinput">E-mail</span>
@@ -53,7 +56,7 @@ function Register (props) {
             maxLength="40"
             id="email"
             autoComplete="off"
-            value={values.email} onChange={handleChange}
+            value={values.email || ''} onChange={handleChange}
           />
           <span id="email-error" className="error">{errors.email || ""}</span>
           <span className="authform__infoinput">Пароль</span>
@@ -67,7 +70,7 @@ function Register (props) {
             maxLength="20"
             id="password"
             autoComplete="off"
-            value={values.password} onChange={handleChange}
+            value={values.password || ''} onChange={handleChange}
           />
           <span id="password-error" className="error">{errors.password || ""}</span>
         </label>
@@ -77,4 +80,4 @@ function Register (props) {
   )
 }
 
-export default Register;
+export default withRouter(Register);

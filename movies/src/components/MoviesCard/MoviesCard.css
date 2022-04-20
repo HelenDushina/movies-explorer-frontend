@@ -71,7 +71,7 @@
     background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 888px) {
     .movie__group {
         width: 342px;
     }

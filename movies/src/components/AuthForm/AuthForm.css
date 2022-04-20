@@ -18,6 +18,12 @@
     text-align: center;
 }
 
+.authform__warning{
+    padding: 0;
+    margin: 0 0 10px;
+    color: #EE3465;
+    font-size: 12px;
+}
 
 .authform__button{
     width: 396px;
