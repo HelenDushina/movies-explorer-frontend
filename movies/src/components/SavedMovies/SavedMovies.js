@@ -9,6 +9,7 @@ function SavedMovies (props) {
     <main className="page__content">
       <Header main = {false} onOpenMenu = {props.onOpenMenu}/>
       <SearchForm onSearch = {props.onSearch}
+                  savedMovies = {true}
                   initialValueSearch = {props.initialValueSearch}
                   initialValueShort = {props.initialValueShort}
                   handleChangeDuration = {props.handleChangeDuration}/>

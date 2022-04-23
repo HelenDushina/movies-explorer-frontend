@@ -10,3 +10,6 @@ export const amountMinScreenWidth = 5;
 export const stepMaxScreenWidth = 3;
 export const stepMediumScreenWidth = 2;
 export const stepMinScreenWidth = 2;
+
+export const shortFilmDuration = 40;
+export const PAGE_WITHOUT_AUTH = ["/signin", "/signup"];

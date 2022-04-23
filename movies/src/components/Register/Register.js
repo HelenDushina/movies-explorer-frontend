@@ -54,6 +54,7 @@ function Register (props) {
             required
             minLength="2"
             maxLength="40"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             id="email"
             autoComplete="off"
             value={values.email || ''} onChange={handleChange}

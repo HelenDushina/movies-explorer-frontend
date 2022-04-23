@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import AuthForm from "../AuthForm/AuthForm";
 import "../AuthForm/AuthForm.css"
 import "./Profile.css";
@@ -10,13 +10,20 @@ function Profile (props) {
 
   const {values, handleChange, setValues, errors, isValid, setInitialValues} = useFormWithValidation();
   const currentUser = React.useContext (CurrentUserContext);
+  const [isSameValues, setIsSameValues] = useState(false);
 
 
   React.useEffect (() => {
     setValues(currentUser.data);
   }, [currentUser]);
 
-
+  React.useEffect (() => {
+    if (currentUser.data.name === values.name && currentUser.data.email === values.email) {
+      setIsSameValues (true);
+    } else {
+      setIsSameValues (false);
+    }
+  }, [currentUser, values.name, values.email]);
 
   function handleSubmit (e) {
     // Запрещаем браузеру переходить по адресу формы
@@ -31,7 +38,7 @@ function Profile (props) {
   return (
     <>
       <Header/>
-      <AuthForm title={`Привет, ${currentUser.data.name}`} buttonText='Редактировать' onSubmit={handleSubmit} isProfile={true} isDisabled = {!isValid}
+      <AuthForm title={`Привет, ${currentUser.data.name}`} buttonText='Редактировать' onSubmit={handleSubmit} isProfile={true} isDisabled = {!isValid || isSameValues}
                 ToolTipStatus = {props.ToolTipStatus} warningMessage = {props.warningMessage} onSignOut={props.onSignOut}>
         <label className="authform__label authform__label_type_profile">
           <div className="authform__groupinput">
@@ -60,6 +67,7 @@ function Profile (props) {
               required
               minLength="2"
               maxLength="40"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
               id="email"
               autoComplete="off"
               value={values.email || ''} onChange={handleChange}

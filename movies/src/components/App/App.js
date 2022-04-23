@@ -13,9 +13,10 @@ import Navigation from "../Navigation/Navigation";
 import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 import * as MainApi from "../../utils/MainApi";
 import ProtectedRoute from "../ProtectedRout";
-import {deleteMovie, getContext} from "../../utils/MainApi";
 import MoviesApi from "../../utils/MoviesApi";
-import { useApi } from "../../hooks/UseApi";
+import {shortFilmDuration, PAGE_WITHOUT_AUTH} from "../../utils/constants";
+
+
 
 
 function App(props) {
@@ -93,9 +94,14 @@ function App(props) {
         if (res) {
           setLoggedIn (true);
           setUser (res);
-          setTimeout(()=> {
-            props.history.push ("/movies");
-          }, 300)
+          if(PAGE_WITHOUT_AUTH.includes(props.location.pathname)) {
+              setTimeout(()=> {
+                props.history.push ("/movies");
+              }, 300)
+          }
+          else {
+            props.history.push (props.location.pathname);
+          }
         } else {
 
           localStorage.removeItem ('token');
@@ -134,6 +140,9 @@ function App(props) {
   }
 
   //FILMS
+  const [movies, setMovies] = React.useState ([]);
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem("searchQuery") || "");
+  const [shortQuery, setShortQuery] = useState(JSON.parse(localStorage.getItem("shortQuery")) || false);
 
   function filterMovies(moviesList, searchQuery) {
 
@@ -147,9 +156,9 @@ function App(props) {
 
   function filterMoviesShort(moviesList, shortQuery) {
 
-    if (shortQuery) {
+    if (shortQuery === true) {
       const filteredShortMovies = moviesList.filter((mov) => {
-        return mov.duration <= 40
+        return mov.duration <= shortFilmDuration
       });
       return filteredShortMovies;
     }
@@ -158,72 +167,81 @@ function App(props) {
     }
   }
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [shortQuery, setShortQuery] = useState(false);
-
-
-  const handler = useCallback(() => {
-    return MoviesApi.getInitialMovies ();
-  },[searchQuery]);
-
-  const { data, loading, error } = useApi(handler);
-
-  const [movies, setMovies] = React.useState ([]);
-
-  React.useEffect (() => {
-    if (searchQuery === "") {
-      setMovies ([]);
-      localStorage.setItem("movies", []);
+  useEffect(() => {
+    const moviesList = JSON.parse(localStorage.getItem("movies"));
+    if (moviesList) {
+      setMovies(moviesList);
     }
-    else {
-      const filteredMovies = filterMovies (data,searchQuery,shortQuery)
-        .map((movie) => {
-          const nameEn = movie.nameEN ? movie.nameEN : "---";
-          const imageLink = `https://api.nomoreparties.co${movie.image.url}`;
-          const thumbnailLink = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
-          const country = movie.country ? movie.country : "---";
-          const director = movie.director ? movie.director : "---";
-          const trailerLink = movie.trailerLink ? movie.trailerLink : "https://youtube.ru";
+  }, [])
 
-        return {
-          country: country,
-          director: director,
-          duration: movie.duration,
-          year: movie.year,
-          description: movie.description,
-          image: imageLink,
-          trailerLink: trailerLink,
-          movieId: movie.id,
-          nameEN: nameEn,
-          nameRU: movie.nameRU,
-          thumbnail: thumbnailLink,
-        };
-      });
 
-      setMovies (filteredMovies);
-      localStorage.setItem("movies", filterMovies (data,searchQuery));
-    }
-  },  [data, searchQuery, shortQuery]);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   function handleSearch (data) {
     setSearchQuery(data.film);
-    setShortQuery(data.duration);
-    localStorage.setItem("searchQuery",searchQuery);
-    localStorage.setItem("shortQuery",shortQuery);
+    // setShortQuery(shortQuery);
+    localStorage.setItem("searchQuery",data.film);
+    // localStorage.setItem("shortQuery",shortQuery);
+    setLoading(true);
+    MoviesApi.getInitialMovies ().then((result) => {
+          const filteredMovies = filterMovies (result,data.film,shortQuery)
+            .map((movie) => {
+              const nameEn = movie.nameEN ? movie.nameEN : "---";
+              const imageLink = `https://api.nomoreparties.co${movie.image.url}`;
+              const thumbnailLink = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
+              const country = movie.country ? movie.country : "---";
+              const director = movie.director ? movie.director : "---";
+              const trailerLink = movie.trailerLink ? movie.trailerLink : "https://youtube.ru";
+
+            return {
+              country: country,
+              director: director,
+              duration: movie.duration,
+              year: movie.year,
+              description: movie.description,
+              image: imageLink,
+              trailerLink: trailerLink,
+              movieId: movie.id,
+              nameEN: nameEn,
+              nameRU: movie.nameRU,
+              thumbnail: thumbnailLink,
+            };
+          });
+
+          setMovies (filteredMovies);
+          localStorage.setItem("movies", JSON.stringify(filteredMovies));
+    })
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
   }
 
   function handleChangeDuration() {
     setShortQuery(!shortQuery);
+    localStorage.setItem("shortQuery",JSON.stringify(!shortQuery));
   }
 
   const [savedMovies, setSavedMovies] = React.useState ([]);
+  const [searchQuerySaved, setSearchQuerySaved] = useState("");
+  const [shortQuerySaved, setshortQuerySaved] = useState(false);
+  const [searchResultSaved, setSearchResultSaved] = React.useState ([]);
+
 
   React.useEffect (() => {
     if (loggedIn) {
       MainApi.getMovies ()
         .then ((res) => {
-          localStorage.setItem ("savedMovies", res.data);
           setSavedMovies (res.data);
+          setSearchResultSaved(res.data);
+          localStorage.setItem("savedMovies", JSON.stringify(res.data));
+          localStorage.setItem("searchQuerySaved","");
+          localStorage.setItem("shortQuerySaved",false);
         })
         .catch ((err) => {
           console.log (err);
@@ -248,6 +266,7 @@ function App(props) {
         .then ((res) => {
           localStorage.setItem ("savedMovies", res.data);
           setSavedMovies (res.data);
+          setSearchResultSaved(res.data);
         })
         .catch ((err) => {
           console.log (err);
@@ -261,6 +280,7 @@ function App(props) {
         .then ((res) => {
           localStorage.setItem ("savedMovies", res.data);
           setSavedMovies (res.data);
+          setSearchResultSaved(res.data);
         })
         .catch ((err) => {
           console.log (err);
@@ -269,14 +289,15 @@ function App(props) {
   }
 
 
-  const [searchQuerySaved, setSearchQuerySaved] = useState("");
-  const [shortQuerySaved, setshortQuerySaved] = useState(false);
-
   function handleSavedSearch (data) {
     setSearchQuerySaved(data.film);
-    setshortQuerySaved(data.duration);
+    setshortQuerySaved(shortQuerySaved);
+    localStorage.setItem("searchQuerySaved",data.film);
+    localStorage.setItem("shortQuerySaved",shortQuerySaved);
+
     const filteredMovies = filterMovies (savedMovies,data.film);
-    setSavedMovies(filteredMovies);
+    setSearchResultSaved(filteredMovies);
+
   }
 
   function handleChangeDurationSaved() {
@@ -286,21 +307,34 @@ function App(props) {
   function handleSignOut () {
     setLoggedIn (false);
     localStorage.removeItem ('token');
+
     localStorage.removeItem ('savedMovies');
+
     localStorage.removeItem ('movies');
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('shortQuery');
+    setMovies([]);
+    setSearchQuery("");
+    setShortQuery(false);
+
+
+    localStorage.removeItem ('savedMovies');
+    localStorage.removeItem ('searchResultSaved');
+    localStorage.removeItem('searchQuerySaved');
+    localStorage.removeItem('searchQuerySaved');
+    setSavedMovies([]);
+    setSearchQuerySaved("");
+    setshortQuerySaved(false);
     props.history.push ("/");
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-
     <div className="App">
       <div className="page">
         <Switch>
           <Route exact path="/">
-            <Main />
+            <Main loggedIn = {loggedIn}/>
           </Route>
           <ProtectedRoute exact path="/movies"
                           onOpenMenu={handleOpenMenuClick}
@@ -320,9 +354,9 @@ function App(props) {
                            onOpenMenu={handleOpenMenuClick}
                            loggedIn={loggedIn}
                            component={SavedMovies}
-                           onMovieSave = {handleMovieSave}
-                           movies = {shortQuerySaved? {data: filterMoviesShort(savedMovies, shortQuerySaved)}: {data: savedMovies}}
                            onSearch = {handleSavedSearch}
+                           onMovieSave = {handleMovieSave}
+                           movies = {shortQuerySaved? {data: filterMoviesShort(searchResultSaved, shortQuerySaved)}: {data: searchResultSaved}}
                            handleChangeDuration = {handleChangeDurationSaved}
                            initialValueSearch = {searchQuerySaved}
                            initialValueShort = {shortQuerySaved}
@@ -333,9 +367,14 @@ function App(props) {
           <Route exact path="/signin">
             <Login onLogin={onLogin} ToolTipStatus = {ToolTipStatus} warningMessage = {warningMessage}/>
           </Route>
-          <Route exact path="/profile">
-            <Profile  onUpdateUser={handleUpdateUser} ToolTipStatus = {ToolTipStatus} warningMessage = {warningMessage} onSignOut={handleSignOut}/>
-          </Route>
+          <ProtectedRoute  exact path="/profile"
+                           loggedIn={loggedIn}
+                           component={Profile}
+                           onUpdateUser={handleUpdateUser}
+                           ToolTipStatus = {ToolTipStatus}
+                           warningMessage = {warningMessage}
+                           onSignOut={handleSignOut}
+          />
           <Route path="*">
             <PageNotFound />
           </Route>

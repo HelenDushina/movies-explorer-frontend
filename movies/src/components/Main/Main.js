@@ -10,7 +10,7 @@ import NavTab from "../NavTab/NavTab";
 function Main (props) {
   return (
   <main className="content page__content">
-    <Header main = {true}/>
+    <Header main = {true} loggedIn = {props.loggedIn}/>
     <NavTab />
     <Promo/>
     <Techs/>
