@@ -14,9 +14,6 @@ function MoviesCardList ({movies, savedMovies = false, error, onMovieSave, saved
   const [index , setIndex] = useState (0);
   const [inintialAmount , setinintialAmount] = useState (0);
 
-  // console.log(movies);
-  // console.log(JSON.parse(localStorage.getItem("movies")));
-
 
   useEffect(() => {
     if (width >= maxScreenWidth) {
