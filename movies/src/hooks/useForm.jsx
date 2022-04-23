@@ -25,6 +25,11 @@ export function useFormWithValidation() {
   }, [setErrors, setIsValid]
   );
 
-   return {values, handleChange, setValues, errors, isValid, resetForm};
+  const setInitialValues = useCallback((newValues = {}) => {
+      setValues(newValues);
+    }, []
+  );
+
+   return {values, handleChange, setValues, errors, isValid, resetForm, setInitialValues};
 
 }

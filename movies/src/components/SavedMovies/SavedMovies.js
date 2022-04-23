@@ -8,8 +8,14 @@ function SavedMovies (props) {
   return (
     <main className="page__content">
       <Header main = {false} onOpenMenu = {props.onOpenMenu}/>
-      <SearchForm/>
-      <MoviesCardList savedMovies = {true}/>
+      <SearchForm onSearch = {props.onSearch}
+                  savedMovies = {true}
+                  initialValueSearch = {props.initialValueSearch}
+                  initialValueShort = {props.initialValueShort}
+                  handleChangeDuration = {props.handleChangeDuration}/>
+      <MoviesCardList movies = {props.movies}
+                      savedMovies = {true}
+                      onMovieSave={props.onMovieSave}/>
     </main>
   );
 }

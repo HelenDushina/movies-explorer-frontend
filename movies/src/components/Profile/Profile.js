@@ -1,33 +1,45 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import AuthForm from "../AuthForm/AuthForm";
 import "../AuthForm/AuthForm.css"
 import "./Profile.css";
 import Header from "../Header/Header";
 import {useFormWithValidation} from "../../hooks/useForm";
+import {CurrentUserContext} from '../../contexts/CurrentUserContext';
 
 function Profile (props) {
 
-  const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation();
+  const {values, handleChange, setValues, errors, isValid, setInitialValues} = useFormWithValidation();
+  const currentUser = React.useContext (CurrentUserContext);
+  const [isSameValues, setIsSameValues] = useState(false);
 
-  useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+
+  React.useEffect (() => {
+    setValues(currentUser.data);
+  }, [currentUser]);
+
+  React.useEffect (() => {
+    if (currentUser.data.name === values.name && currentUser.data.email === values.email) {
+      setIsSameValues (true);
+    } else {
+      setIsSameValues (false);
+    }
+  }, [currentUser, values.name, values.email]);
 
   function handleSubmit (e) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault ();
 
-    props.onRegister ({
+    props.onUpdateUser({
       name: values.name,
       email: values.email,
     });
   }
 
-
   return (
     <>
       <Header/>
-      <AuthForm title='Привет, Елена!' buttonText='Редактировать' onSubmit={handleSubmit} isProfile={true} isDisabled = {!isValid}>
+      <AuthForm title={`Привет, ${currentUser.data.name}`} buttonText='Редактировать' onSubmit={handleSubmit} isProfile={true} isDisabled = {!isValid || isSameValues}
+                ToolTipStatus = {props.ToolTipStatus} warningMessage = {props.warningMessage} onSignOut={props.onSignOut}>
         <label className="authform__label authform__label_type_profile">
           <div className="authform__groupinput">
             <span className="authform__infoinput authform__infoinput_profile">Имя</span>
@@ -41,7 +53,7 @@ function Profile (props) {
               maxLength="40"
               id="name"
               autoComplete="off"
-              value={values.name} onChange={handleChange}
+              value={values.name || ''} onChange={handleChange}
             />
           </div>
           <span id="name-error" className="error">{errors.name || ""}</span>
@@ -55,9 +67,10 @@ function Profile (props) {
               required
               minLength="2"
               maxLength="40"
+              pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
               id="email"
               autoComplete="off"
-              value={values.email} onChange={handleChange}
+              value={values.email || ''} onChange={handleChange}
             />
           </div>
           <span id="email-error" className="error">{errors.email || ""}</span>

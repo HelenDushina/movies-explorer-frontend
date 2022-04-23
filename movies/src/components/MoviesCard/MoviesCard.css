@@ -20,6 +20,10 @@
     line-height: 18px;
     margin: 0;
     padding: 0 14px 0 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .movie__subtitle {
@@ -71,7 +75,7 @@
     background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 888px) {
     .movie__group {
         width: 342px;
     }

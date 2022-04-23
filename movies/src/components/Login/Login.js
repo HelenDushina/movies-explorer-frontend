@@ -4,6 +4,7 @@ import "../AuthForm/AuthForm.css";
 import "./Login.css"
 import Header from "../Header/Header";
 import {useFormWithValidation} from "../../hooks/useForm";
+import {withRouter} from "react-router-dom";
 
 function Login (props) {
 
@@ -13,7 +14,7 @@ function Login (props) {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault ();
 
-    props.onRegister ({
+    props.onLogin ({
       password: values.password,
       email: values.email,
     });
@@ -23,7 +24,8 @@ function Login (props) {
   return (
     <>
       <Header/>
-      <AuthForm title='Рады видеть!' buttonText='Войти' onSubmit={handleSubmit} isDisabled = {!isValid}>
+      <AuthForm title='Рады видеть!' buttonText='Войти' onSubmit={handleSubmit}
+                isDisabled = {!isValid} ToolTipStatus = {props.ToolTipStatus} warningMessage = {props.warningMessage}>
         <label className="authform__label authform__label_type_login">
           <span className="authform__infoinput">E-mail</span>
           <input
@@ -34,9 +36,10 @@ function Login (props) {
             required
             minLength="2"
             maxLength="40"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
             id="email"
             autoComplete="off"
-            value={values.email} onChange={handleChange}
+            value={values.email || ''} onChange={handleChange}
           />
           <span id="email-error" className="error">{errors.email || ""}</span>
           <span className="authform__infoinput">Пароль</span>
@@ -50,7 +53,7 @@ function Login (props) {
             maxLength="20"
             id="password"
             autoComplete="off"
-            value={values.password} onChange={handleChange}
+            value={values.password || ''} onChange={handleChange}
           />
           <span id="password-error" className="error">{errors.password || ""}</span>
         </label>
@@ -60,4 +63,4 @@ function Login (props) {
   )
 }
 
-export default Login;
+export default withRouter(Login);
